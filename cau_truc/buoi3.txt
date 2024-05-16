@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+
+// Buoc 1: Tao cau truc Node
+struct Node
+{
+    int data;
+    Node* pPre;
+    Node* pNext;
+};
+
+// Buoc 2: Khoi tao Node tu 1 gia tri value
+Node* initNode(int value)
+{
+    Node* p = new Node;
+    if (p == NULL)
+    {
+        return NULL;
+    }
+    p->data = value;
+    p->pNext = NULL;
+    p->pPre = NULL;
+    return p;
+}
+
+// Buoc 3: Tao cau truc List
+struct List
+{
+    Node* pHead;
+    Node* pTail;
+};
+
+// Buoc 4: Khoi tao List
+void initList(List &l)
+{
+    l.pHead = NULL;
+    l.pTail = NULL;
+}
+
+void addHead(List &l, Node* p)
+{
+    if(p == NULL)
+    {
+        return;
+    }
+    if (l.pTail == NULL)
+    {
+        l.pHead = p;
+        l.pTail = p;
+    }
+    else
+    {
+        p->pNext = l.pHead;
+        l.pHead->pPre = p;
+        l.pHead = p;
+
+    }
+}
+
+void addTail(List &l, Node* p)
+{
+    if (p == NULL)
+    {
+        return;
+    }
+    if (l.pHead == NULL)
+    {
+        l.pHead = l.pTail = p;
+    }
+    else
+    {
+        p->pPre = l.pTail;
+        l.pTail->pNext = p;    
+        l.pTail = p;
+    }
+}
+
+void printList(List l)
+{
+    Node* p = l.pHead;
+    while(p != NULL)
+    {
+        cout << p->data << endl;
+        p = p->pNext;
+    }
+}
+
+// Tim gia tri co nam trong ds
+Node* tim(List ds, int value)
+{
+    for(Node* p = ds.pTail; p != NULL; p = p->pPre)
+    {
+        if(p->data == value)
+        {
+            return p;
+        }
+    }
+    return NULL;
+}
+
+
+int main()
+{
+    List ds;
+    initList(ds);
+
+    // Tao 10, 39, 79
+    Node* p1 = initNode(10);
+    Node* p2 = initNode(39);
+    Node* p3 = initNode(79);
+
+    addHead(ds, p1);
+    addHead(ds, p2);
+    addTail(ds, p3);
+    addTail(ds, initNode(99));
+    printList(ds);
+
+    cout << tim(ds, 11) << endl;
+    return 0;
+}

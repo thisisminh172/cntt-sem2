@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+// Buoc 1: Tao cau truc node
+struct Node
+{
+    int data;
+    Node* pNext;
+};
+
+// Buoc 2: Khoi tao node => viet ham: value => *node
+Node* initNode(int value)
+{
+    Node* p = new Node;
+    p->data = value;
+    p->pNext = NULL;
+    return p;
+}
+
+// Buoc 3: Tao cau truc Stack
+struct Stack
+{
+    Node* pTop;
+};
+
+// Buoc 4: Khoi tao Stack
+void initStack(Stack &s)
+{
+    s.pTop = NULL;
+}
+
+void push(Stack &s, Node* p)
+{
+    if (p == NULL)
+        return;
+    if (s.pTop == NULL)
+    {
+        s.pTop = p;
+    }
+    else
+    {
+        p->pNext = s.pTop;
+        s.pTop = p;
+    }
+}
+
+void printfStack(Stack s)
+{
+    cout << "Stack S = Top<   ";
+    for(Node* p = s.pTop; p != NULL; p = p->pNext)
+    {
+        cout << p->data << "   ";
+        
+    }
+    cout << ">" << endl << endl;
+}
+
+int pop(Stack &s)
+{
+    if(s.pTop == NULL)
+        return 0;
+    Node* p = s.pTop;
+    s.pTop = s.pTop->pNext;
+    int value = p->data;
+    delete p;
+
+    return value;
+}
+
+void pop(Stack &s, int& value)
+{
+    if(s.pTop == NULL)
+        return;
+    Node* p = s.pTop;
+    s.pTop = s.pTop->pNext;
+    value = p->data;
+    delete p;
+}
+
+int main()
+{
+    Stack s;
+    initStack(s);
+
+    Node* p1 = initNode(10);
+    Node* p2 = initNode(39);
+    Node* p3 = initNode(79);
+
+    push(s, p1);
+    push(s, p2);
+    push(s, p3);
+
+    printfStack(s);
+
+    int value = pop(s);
+
+    printfStack(s);
+    return 0;
+}

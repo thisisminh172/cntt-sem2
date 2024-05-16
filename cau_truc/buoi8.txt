@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+// Tim kiem tuyen tinh
+bool linearSearch(int a[], int n, int value)
+{
+    for(int i = 0; i < n; i++)
+    {
+        if(a[i] == value)
+            return true;
+    }
+    return false;
+}
+
+bool linearSearch2(int a[], int n, int value)
+{
+    int i = 0;
+    while(i < n)
+    {
+        if(a[i] == value)
+            return true;
+        i++;
+    }
+    return false;
+}
+
+// Tim nhi phan
+bool binary_s(int a[], int n, int value)
+{
+    int left = 0, right = n - 1, mid;
+
+    
+
+    while(left <= right)
+    {
+        mid = (left + right) / 2;
+        if(a[mid] == value)
+        return true;
+    
+        if(value > a[mid])
+            left = mid + 1;
+        else if(value < a[mid])
+            right = mid - 1;
+    }
+    return false;
+}
+
+// Tim kiem noi suy
+bool interpolation_s(int a[], int n, int value)
+{
+    int left = 0, right = n - 1, mid;
+
+    while(left <= right)
+    {
+        mid = left + ((right - left) / (a[right] - a[left])) * (value - a[left]);
+        if(a[mid] == value)
+        return true;
+    
+        if(value > a[mid])
+            left = mid + 1;
+        else if(value < a[mid])
+            right = mid - 1;
+    }
+    return false;
+}
+
+int main()
+{
+    int a[100] = {56, 23, 89, 78, 10, 33, 23, 90};
+    int n = 8;
+
+    cout << "Ket qua tim 10: " << linearSearch(a, n, 10) << endl;
+    cout << "Ket qua tim 10: " << linearSearch2(a, n, 10) << endl;
+
+    cout << "Ket qua tim 11: " << linearSearch(a, n, 11) << endl;
+    cout << "Ket qua tim 11: " << linearSearch2(a, n, 11) << endl;
+
+    int b[100] = {10, 15, 27, 33, 50, 62, 72, 86};
+    int m = 8;
+
+    cout << "Ket qua tim 33: "  << binary_s(b, m, 33) << endl;
+    cout << "Ket qua tim 99: "  << binary_s(b, m, 99) << endl;
+
+    return 0;
+
+}

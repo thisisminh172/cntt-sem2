@@ -1,0 +1,118 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+void printfArr(int a[], int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        cout << a[i] << "   ";
+    }
+    cout << endl;
+}
+
+void printfArr(float a[], int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        cout << a[i] << "   ";
+    }
+    cout << endl;
+}
+
+void selectionSort(int a[], int n)
+{   
+    cout << "sdfsdfsdfsdf" << endl;
+    int m;
+    for(int i = 0; i < n - 1; i++)
+    {
+        m = i;
+        for(int j = i + 1; j < n; j++)
+        {
+            if(a[j] < a[m])
+            {
+                m = j;
+            }
+        }
+        if(i != m)
+        {
+            swap(a[i], a[m]);
+        }
+            
+
+        printfArr(a, n);
+        
+    }
+}
+
+void insertionSort(int a[], int n)
+{
+    for(int i = 1; i < n; i++)
+    {
+        int item = a[i];
+        int j;
+        for(j = i - 1; j >= 0; j--)
+        {
+            if(a[j] < item)
+                break;
+            a[j+1] = a[j];
+        }
+        a[j+1] = item;
+    }
+}
+
+double selectionSort_Time(int a[], int n)
+{
+    clock_t start, end;
+    
+    start = clock();
+    selectionSort(a, n);
+    end = clock();
+
+    return ((double) (end - start)) / CLOCKS_PER_SEC;
+}
+
+double insertionSort_Time(int a[], int n)
+{
+    clock_t start, end;
+    
+    start = clock();
+    insertionSort(a, n);
+    end = clock();
+
+    return ((double) (end - start)) / CLOCKS_PER_SEC;
+}
+
+// Viet ham khoi tao tu dong 100_000 phan tu kieu so thuc
+// (lay 3 so sau dau thap phan) cho mang
+void arr100K(float a[], int& n)
+{
+    n = 1000000;
+    for(int i = 0; i < n; i++)
+    {
+        a[i] = rand() + (rand() % 1001) / 1000.0;
+    }
+}
+
+
+
+int main()
+{
+    srand(time(NULL));
+    float arr[(int) 1e6];
+    int m = 0;
+    arr100K(arr, m);
+    printfArr(arr, m);
+
+    int a[100] = {56, 23, 89, 90, 11, 28};
+    int n = 6;
+
+    // printfArr(a, n);
+    selectionSort(a, n);
+    printfArr(a, n);
+    // double t = selectionSort_Time(a, n);
+    // cout << "Time = "  << endl;
+    // insertionSort(a, n);
+    // printfArr(a, n);
+
+}

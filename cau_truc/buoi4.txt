@@ -1,0 +1,118 @@
+#include <iostream>
+using namespace std;
+
+typedef struct SinhVien
+{
+    int maSV;
+    string hoTen;
+    float diemMH;
+} SV;
+
+void printSV(SinhVien sv)
+{
+    cout << "thong tin sv:" << endl;
+    cout << "\t+ Ma sv: " << sv.maSV << endl;
+    cout << "\t+ Ho ten: " << sv.hoTen << endl;
+    cout << "\t+ diemMH: " << sv.diemMH << endl;
+}
+
+
+struct Node
+{
+    SinhVien data;
+    Node* pPre;
+    Node* pNext;
+};
+
+Node* initNode(SinhVien value)
+{
+    Node* p = new Node;
+    if (p == NULL)
+    {
+        return NULL;
+    }
+    p->data = value;
+    p->pNext = NULL;
+    p->pPre = NULL;
+    return p;
+}
+
+struct List
+{
+    Node* pHead;
+    Node* pTail;
+};
+
+// Buoc 4: Khoi tao List
+void initList(List &l)
+{
+    l.pHead = NULL;
+    l.pTail = NULL;
+}
+
+void addHead(List &l, Node* p)
+{
+    if(p == NULL)
+    {
+        return;
+    }
+    if (l.pTail == NULL)
+    {
+        l.pHead = p;
+        l.pTail = p;
+    }
+    else
+    {
+        p->pNext = l.pHead;
+        l.pHead->pPre = p;
+        l.pHead = p;
+
+    }
+}
+
+void addTail(List &l, Node* p)
+{
+    if (p == NULL)
+    {
+        return;
+    }
+    if (l.pHead == NULL)
+    {
+        l.pHead = l.pTail = p;
+    }
+    else
+    {
+        p->pPre = l.pTail;
+        l.pTail->pNext = p;    
+        l.pTail = p;
+    }
+}
+
+void printList(List l)
+{
+    Node* p = l.pHead;
+    while(p != NULL)
+    {
+        printSV(p->data);
+        p = p->pNext;
+    }
+}
+
+void initListSV(List &ds)
+{
+    SinhVien sv1 = {123, "Nguyen A", 8.8};
+    addHead(ds, initNode(sv1));
+    addTail(ds, initNode(SV{124, "Nguyen B", 7.6}));
+}
+
+
+int main()
+{
+    List ds;
+    initList(ds);
+    initListSV(ds);
+
+    printList(ds);
+
+    return 0;
+}

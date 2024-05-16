@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+// Buoc 1: Xay dung cau truc Node
+struct Node 
+{
+    int data;
+    Node* pNext; 
+};
+
+// Buoc 2: Khoi tao Node
+// Value => Node*
+Node* initNode(int value)
+{
+    Node* p = new Node;
+    p->data = value;
+    p->pNext = NULL;
+    return p;
+}
+
+// Buoc 3: Tao cau truc Queue
+struct Queue
+{
+    Node* pFront;
+    Node* pRear;
+};
+
+// Buoc 4: Khoi tao Queue
+void initQueue(Queue& q)
+{
+    q.pFront = NULL;
+    q.pRear = NULL;
+}
+
+void enQueue(Queue &q, Node* p)
+{
+    if(q.pFront == NULL)
+    {
+        // l.pHead = p;
+        // l.pTail = p;
+        q.pFront = q.pRear = p;
+    }
+    else
+    {
+        q.pRear->pNext = p;
+        q.pRear = p;
+    }
+    
+}
+
+void printQueue(Queue q)
+{
+    cout << "Queue q = <<Front   " ;
+    for (Node* p = q.pFront; p != NULL; p = p->pNext)
+    {
+        cout << p->data << "  ";
+    }
+    cout << "<<Rear" << endl << endl;
+}
+int main()
+{
+    Queue q;
+    initQueue(q);
+
+    enQueue(q, initNode(10));
+    enQueue(q, initNode(20));
+    enQueue(q, initNode(15));
+
+    printQueue(q);
+    return 20;
+}

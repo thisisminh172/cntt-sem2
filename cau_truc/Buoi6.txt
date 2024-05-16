@@ -1,0 +1,127 @@
+#include <iostream>
+
+using namespace std;
+const int Size = 5;
+
+// Buoc 1
+struct Node 
+{
+    int data;
+    Node* pNext;
+};
+
+// Buoc 2
+Node* initNode(int value)
+{
+    Node* p = new Node();
+
+    p->data = value;
+    p->pNext = NULL;
+    return p;
+}
+
+// Buoc 3
+struct Bucket
+{
+    Node* pHead;
+    Node* pTail;
+};
+
+// Buoc 4
+void initBucket(Bucket& bk)
+{
+    bk.pHead = bk.pTail = NULL;
+}
+
+// Buoc 5: Khai bao HashTable
+struct HashTable
+{
+    Bucket bucket[Size];
+};
+
+// Buoc 6: Khoi tao HashTable
+void initHashTable(HashTable& h)
+{
+    for (int i = 0; i < Size; i++)
+    {
+        initBucket(h.bucket[i]);
+    }
+}
+
+void addBucket(Bucket& bk, Node* p)
+{
+    if(bk.pHead == NULL)
+    {
+        bk.pHead = bk.pTail = p;
+    }
+    else
+    {
+        bk.pTail->pNext = p;
+        bk.pTail = p;
+    }
+}
+// Ham bam theo phuong phap chia lay du
+int hashFunc(int value)
+{
+    return value % Size;
+}
+
+// V1
+void add(HashTable& h, Node* p)
+{   
+    // Buoc 1: Tim vi tri bucket
+    int i = hashFunc(p->data);
+
+    // Buoc 2: Them vao bucket
+    addBucket(h.bucket[i], p);
+}
+
+// V2
+void add(HashTable& h, int value)
+{
+    // Buoc 1: Tim vi tri bucket
+    int i = hashFunc(value);
+
+    // Buoc 2: Them vao bucket
+    Node* p = initNode(value);
+    addBucket(h.bucket[i], p);
+}
+
+void printHashTable(HashTable h)
+{
+    for(int i = 0; i < Size; i++)
+    {
+        // Bucket bk = h.bucket[i];
+        cout << "bucket [" << i << "] = ";
+        for(Node* p = h.bucket[i].pHead; p != NULL; p = p->pNext)
+        {
+            cout << p->data << "   ";
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    HashTable h;
+    initHashTable(h);
+
+    Node* p1 = initNode(50);
+    Node* p2 = initNode(73);
+    Node* p3 = initNode(35);
+
+    add(h, p1);
+    add(h, p2);
+    add(h, p3);
+
+    add(h, 36);
+    add(h, 64);
+    add(h, 28);
+    add(h, 90);
+    add(h, 21);
+    add(h, 53);
+    add(h, 13);
+
+    printHashTable(h);
+    return 0;
+}
